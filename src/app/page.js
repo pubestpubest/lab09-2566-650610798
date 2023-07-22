@@ -10,16 +10,23 @@ import { useState } from "react";
 export default function Home() {
   //tasks = array of {id: string, title: string, completed: boolean}
   const [tasks, setTasks] = useState([]);
+  const [allTask, setAllTask] = useState(0);
+  const [done, setDone] = useState(0);
 
   const addTask = (newTaskTitle) => {
     const newTask = { id: nanoid(), title: newTaskTitle, completed: false };
     const newTasks = [...tasks, newTask];
     setTasks(newTasks);
+    setAllTask(allTask + 1);
   };
 
   const deleteTask = (taskId) => {
+    // const thisTask = tasks.find((x) => x.id === taskId);
+    // setDone(thisTask.completed ? done - 1 : done);
     const newTasks = tasks.filter((task) => task.id !== taskId);
+    setDone(newTasks.filter((x) => x.completed).length);
     setTasks(newTasks);
+    setAllTask(allTask - 1);
   };
 
   const toggleDoneTask = (taskId) => {
@@ -28,8 +35,10 @@ export default function Home() {
     const newTasks = structuredClone(tasks);
     //search for a task based on condition
     const task = newTasks.find((x) => x.id === taskId);
+    //setDone(task.completed ? done - 1 : done + 1);
     task.completed = !task.completed;
     setTasks(newTasks);
+    setDone(newTasks.filter((x) => x.completed).length);
   };
 
   return (
@@ -41,7 +50,7 @@ export default function Home() {
       <div style={{ maxWidth: "400px" }} className="mx-auto">
         {/* Task summary */}
         <p className="text-center text-secondary fst-italic">
-          All (...) Done (...)
+          All ({allTask}) Done ({done})
         </p>
         {/* task input */}
         <TaskInput addTaskFunc={addTask} />
@@ -60,7 +69,7 @@ export default function Home() {
       </div>
 
       {/* //footer section */}
-      <Footer year="2023" fullName="Chayanin Suatap" studentId="12345678" />
+      <Footer year="2023" fullName="Pubest Ruengkum" studentId="650610798" />
     </div>
   );
 }

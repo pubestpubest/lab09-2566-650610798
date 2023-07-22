@@ -17,6 +17,8 @@ export const TaskInput = ({ addTaskFunc }) => {
     if (event.key === "Enter" && taskInput !== "") addTaskBtnOnClick();
   };
 
+  const btnClassName =
+    taskInput !== "" ? "btn btn-primary " : "btn btn-primary disabled";
   return (
     <div className="d-flex gap-1">
       <input
@@ -26,7 +28,7 @@ export const TaskInput = ({ addTaskFunc }) => {
         onKeyUp={taskInputOnKeyUp}
         value={taskInput}
       />
-      <button className="btn btn-primary" onClick={addTaskBtnOnClick}>
+      <button className={btnClassName} onClick={addTaskBtnOnClick}>
         Add
       </button>
     </div>
